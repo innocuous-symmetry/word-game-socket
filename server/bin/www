@@ -3,6 +3,8 @@ const Game = require('../Game');
 const socketio = require('socket.io');
 const app = require('../.')
 
+const db = require('../db/conn');
+
 const http = require('http');
 const server = http.createServer(app);
 
@@ -21,5 +23,8 @@ server.on('error', (err) => {
 })
 
 server.on('listening', () => {
+  db.connectToServer((err) => {
+    if (err) console.log(err);
+  });
   console.log("Listening on port 8080");
 });
